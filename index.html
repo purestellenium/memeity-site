@@ -3,99 +3,321 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>memeity: your meme folder, everywhere</title>
+    <title>memeity: a meme folder for the modern era</title>
     <meta
       name="description"
-      content="memeity is a desktop app that keeps one meme folder in sync across your devices, with a fast keyboard-first search pane."
+      content="memeity is a desktop app that keeps one meme folder in sync across your computers through your own Google Drive, with a fast search pane that finds memes by their name or the text in them."
     />
+    <meta name="theme-color" content="#09090b" />
+
+    <!-- Link previews -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://memeity.stelle.codes/" />
+    <meta property="og:title" content="memeity: a meme folder for the modern era" />
+    <meta
+      property="og:description"
+      content="One meme folder, synced across your computers, searchable by the words in the memes. For Windows and Mac."
+    />
+    <meta property="og:image" content="https://memeity.stelle.codes/assets/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="The memeity search pane showing a grid of memes" />
+    <meta name="twitter:card" content="summary_large_image" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@500&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="stylesheet" href="/style.css" />
   </head>
-  <body>
+  <body class="home">
     <nav>
-      <div class="wrap">
+      <div class="wrap wide">
         <a class="brand" href="/"><img src="/logo.png" alt="" width="24" height="24" />memeity</a>
         <div class="links">
+          <a href="#features">Features</a>
           <a href="/privacy/">Privacy</a>
           <a href="https://github.com/purestellenium/memeity">GitHub</a>
+          <a class="btn small primary js-download" href="https://github.com/purestellenium/memeity/releases/latest">Download</a>
         </div>
       </div>
     </nav>
 
-    <main class="wrap">
+    <main>
+      <!-- ---------- hero ---------- -->
       <section class="hero">
-        <img class="hero-logo" src="/logo.png" alt="memeity logo" width="96" height="96" />
-        <span class="eyebrow">Desktop app · Windows &amp; Mac</span>
-        <h1>Your meme folder, everywhere.</h1>
-        <p class="lede">
-          memeity keeps one meme folder in sync across all your computers, and gives you a lightning-fast search pane to
-          find the right meme and paste it anywhere.
-        </p>
-        <div class="actions">
-          <!-- Points at the latest release page; the script below swaps in the direct
-               installer link for the visitor's OS. -->
-          <a class="btn primary" id="download" href="https://github.com/purestellenium/memeity/releases/latest">Download memeity</a>
-          <a class="btn" href="https://github.com/purestellenium/memeity">View source</a>
+        <div class="wrap wide hero-grid">
+          <div class="hero-copy">
+          <div class="hero-logo">
+            <img src="/logo.png" alt="memeity logo" width="100" height="100" />
+            <p class="speech">hey, it's me, it's memeity!</p>
+          </div>
+          <h1>a meme folder for the modern era.</h1>
+          <p class="lede">
+            Every meme you own, in one folder synced through your own Google Drive. Hit a shortcut, type what you remember,
+            and paste the perfect meme anywhere.
+          </p>
+          <div class="actions">
+            <!-- Points at the latest release page; the script below swaps in the direct
+                 installer link for the visitor's OS. -->
+            <a class="btn large primary js-download" id="download" href="https://github.com/purestellenium/memeity/releases/latest">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M5 21h14" /></svg>
+              <span class="js-download-label">Download memeity</span>
+            </a>
+            <a class="btn large" href="https://github.com/purestellenium/memeity">View source</a>
+          </div>
+          <p class="download-meta" id="download-meta">
+            Windows 10+ and Apple Silicon Macs ·
+            <a href="https://github.com/purestellenium/memeity/releases/latest">All downloads</a>
+          </p>
+          </div>
+
+          <!-- Live, typeable recreation of the search pane. -->
+          <div class="demo">
+            <div class="demo-glow" aria-hidden="true"></div>
+            <div class="pane" role="group" aria-label="Interactive preview of the memeity search pane">
+              <div class="pane-head">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>
+                <input
+                  id="demo-q"
+                  type="text"
+                  placeholder="Search 6 memes by name or text…"
+                  aria-label="Search the example memes"
+                  autocomplete="off"
+                  spellcheck="false"
+                />
+                <span class="folder-chip">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" /></svg>
+                  memeity
+                </span>
+              </div>
+              <div class="pane-grid" id="demo-grid">
+                <figure class="tile" data-w="480" data-h="599" data-text="can you just shut up tyrese haliburton indiana can you just shut up? tyrese haliburton to buddy hield and tristan thompson after being traded from the kings">
+                  <img src="/assets/demo/shut-up.jpg" alt="Meme: CAN YOU JUST SHUT UP?" />
+                </figure>
+                <figure class="tile" data-w="480" data-h="295" data-text="stupid looking dog listen to him listen to him">
+                  <img src="/assets/demo/listen.jpg" alt="Meme: a dog with the caption LISTEN TO HIM" />
+                </figure>
+                <figure class="tile" data-w="480" data-h="426" data-text="bunny thix theven thix theven!">
+                  <img src="/assets/demo/theven.jpg" alt="Meme: a bunny with the caption thix theven!" />
+                </figure>
+                <figure class="tile" data-w="480" data-h="404" data-text="seal your execution will be in 3 days!">
+                  <img src="/assets/demo/execution.jpg" alt="Meme: a seal with the caption Your execution will be in 3 days!" />
+                </figure>
+                <figure class="tile" data-w="480" data-h="372" data-text="z666rxmi2kph1 who is this">
+                  <img src="/assets/demo/who.jpg" alt="Meme: two people with the caption WHO IS THIS" />
+                </figure>
+                <figure class="tile" data-w="480" data-h="343" data-text="what-a-terrible-day-to-have-slick what terrible day to have slick">
+                  <img src="/assets/demo/terrible-day.jpg" alt="Meme: retro text reading What a TERRIBLE DAY TO HAVE SLICK" />
+                </figure>
+                <p class="pane-empty" id="demo-empty" hidden>No memes match that. Try “execution” or “listen”.</p>
+                <div class="pane-toast" id="demo-toast" aria-live="polite">Pasted ✓</div>
+              </div>
+              <div class="pane-bar">
+                <span class="sync"><i></i>Synced just now</span>
+                <span class="pane-acts">
+                  <span class="act strong" id="demo-paste">Paste to App <kbd>↵</kbd></span>
+                  <span class="act hide-sm">Copy <kbd>Shift</kbd><kbd>↵</kbd></span>
+                  <span class="act hide-sm">Actions <kbd>Ctrl</kbd><kbd>K</kbd></span>
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
-        <p class="download-meta" id="download-meta">
-          Free · Windows 10+ and Apple Silicon Macs ·
-          <a href="https://github.com/purestellenium/memeity/releases/latest">All downloads</a>
-        </p>
       </section>
 
-      <section class="features" aria-label="Features">
-        <div class="feature">
-          <h3>Instant search pane</h3>
-          <p>Press <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>M</kbd> from anywhere, type, hit Enter. It's keyboard-first.</p>
-        </div>
-        <div class="feature">
-          <h3>Finds the words in memes</h3>
-          <p>Search by filename or by the text on the image itself, read on your device.</p>
-        </div>
-        <div class="feature">
-          <h3>Synced through your Drive</h3>
-          <p>Your memes live in a <strong>memeity</strong> folder in your own Google Drive, on every device you sign in on.</p>
-        </div>
-        <div class="feature">
-          <h3>GIFs stay animated</h3>
-          <p>Copy a GIF and paste it into Discord, Slack or a browser with its animation intact.</p>
+      <!-- ---------- the problem ---------- -->
+      <section class="story">
+        <div class="wrap wide story-grid">
+          <div>
+            <span class="kicker">Picture this</span>
+            <h2>You've thought of the perfect meme. Now where is it?</h2>
+            <p>
+              You're chatting with friends and the perfect meme comes to mind. You dig through your Downloads folder, only to
+              realise you've forgotten the filename. Or worse, the meme is on your <em>other</em> computer.
+            </p>
+            <p>
+              memeity fixes this. Your memes live in one folder in your own Google Drive, synced to every computer you use,
+              and you can search them however you remember them, or however you don't.
+            </p>
+          </div>
+          <div class="chats" aria-hidden="true">
+            <div class="chat">
+              <span class="chat-label">without memeity</span>
+              <div class="msg them">ok dont be mad but prod is down</div>
+              <div class="msg me">bro</div>
+              <div class="msg me">hold on</div>
+              <div class="msg me">nvm that memes on my other laptop</div>
+              <div class="msg me">anyways ur getting slimed out</div>
+            </div>
+            <div class="chat good">
+              <span class="chat-label">with memeity</span>
+              <div class="msg them">ok dont be mad but prod is down</div>
+              <div class="msg me img"><img src="/assets/demo/execution.jpg" alt="" /></div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section class="panel" id="google-drive">
-        <h2>How memeity uses your Google account</h2>
-        <p>
-          memeity signs in with Google only to sync your memes between your devices through your own Google Drive. It asks
-          for the narrowest Drive permission available, which lets it see <strong>only the files and folders memeity
-          creates</strong>, never the rest of your Drive.
-        </p>
-        <p>
-          There's no memeity server: your memes go straight between your devices and Google Drive, and the developer never
-          receives them. Read the full <a href="/privacy/">privacy policy</a>.
-        </p>
+      <!-- ---------- features ---------- -->
+      <section class="features" id="features">
+        <div class="wrap wide">
+          <span class="kicker">Features</span>
+          <h2 class="section-title">Everything you need to always have the right meme.</h2>
+          <div class="bento">
+            <article class="card span-2">
+              <div class="card-visual keys" aria-hidden="true">
+                <kbd class="key" id="key-1">Ctrl</kbd><span class="plus">+</span><kbd class="key" id="key-2">Alt</kbd><span class="plus">+</span><kbd class="key">M</kbd>
+              </div>
+              <h3>A search pane, one shortcut away</h3>
+              <p>Press the shortcut from any app, type, hit Enter. The meme pastes straight into whatever you were using. Keyboard-first, Raycast-style.</p>
+            </article>
+
+            <article class="card row-2">
+              <div class="card-visual ocr" aria-hidden="true">
+                <div class="ocr-img">
+                  <img src="/assets/demo/execution.jpg" alt="" />
+                  <span class="ocr-box"></span>
+                  <span class="ocr-scan"></span>
+                </div>
+                <div class="ocr-query"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>execution<span class="ocr-tag">text match</span></div>
+              </div>
+              <h3>Finds the words in your memes</h3>
+              <p>
+                Search by filename or by the text on the image itself. memeity reads it on your device, so nothing gets sent
+                anywhere to be read.
+              </p>
+            </article>
+
+            <article class="card span-2">
+              <div class="card-visual sync-visual" aria-hidden="true">
+                <span class="node">
+                  <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="11" rx="2" /><path d="M1 19h22" /></svg>Laptop
+                </span>
+                <span class="wire"><i></i></span>
+                <span class="node hub">
+                  <svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" /></svg>memeity
+                  <small>in your Google Drive</small>
+                </span>
+                <span class="wire reverse"><i></i></span>
+                <span class="node">
+                  <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M8 20h8M12 16v4" /></svg>Desktop
+                </span>
+              </div>
+              <h3>Synced through your own Drive</h3>
+              <p>Sign in with Google and you're set up. Your memes live in a <strong>memeity</strong> folder in your Drive and show up on every computer you sign in on.</p>
+            </article>
+
+            <article class="card">
+              <div class="card-visual drop" aria-hidden="true">
+                <div class="drop-zone">
+                  <img src="/assets/demo/theven.jpg" alt="" />
+                  <span>Drop or <kbd>Ctrl</kbd><kbd>V</kbd></span>
+                </div>
+              </div>
+              <h3>Add memes in a second</h3>
+              <p>Drag and drop or paste images into the pane, and they're added and synced right away.</p>
+            </article>
+
+            <article class="card">
+              <div class="card-visual gif" aria-hidden="true">
+                <div class="gif-tile"><img src="/assets/demo/listen.jpg" alt="" /><span class="gif-badge">GIF</span></div>
+              </div>
+              <h3>GIFs stay animated</h3>
+              <p>Paste a GIF into Discord, Slack or a browser and it keeps moving.</p>
+            </article>
+
+            <article class="card">
+              <div class="card-visual update" aria-hidden="true">
+                <span class="update-pill"><i></i><span id="update-version">Up to date</span></span>
+              </div>
+              <h3>Updates itself</h3>
+              <p>New versions install automatically, so you never have to keep up with releases.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- privacy ---------- -->
+      <section class="privacy" id="google-drive">
+        <div class="wrap wide">
+          <span class="kicker">Privacy</span>
+          <h2 class="section-title">Your memes are your business.</h2>
+          <div class="promises">
+            <div class="promise">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" /></svg>
+              <h3>Only sees its own folder</h3>
+              <p>memeity can't see the rest of your Drive, only the files and folders it created.</p>
+            </div>
+            <div class="promise">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="7" rx="1.5" /><rect x="4" y="13" width="16" height="7" rx="1.5" /><path d="M3 3l18 18" /></svg>
+              <h3>No memeity servers</h3>
+              <p>Your memes go straight between your computers and Google Drive.</p>
+            </div>
+            <div class="promise">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6Z" /><path d="m9 12 2 2 4-4" /></svg>
+              <h3>No telemetry</h3>
+              <p>No analytics, no tracking, no phoning home. I don't need your data, silly!</p>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3>How memeity uses your Google account</h3>
+            <p>
+              memeity signs in with Google only to sync your memes between your devices through your own Google Drive. It asks
+              for the narrowest Drive permission available, which lets it see <strong>only the files and folders memeity
+              creates</strong>, never the rest of your Drive.
+            </p>
+            <p>
+              There's no memeity server: your memes go straight between your devices and Google Drive, and the developer never
+              receives them. Read the full <a href="/privacy/">privacy policy</a>.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- closing ---------- -->
+      <section class="cta">
+        <div class="wrap wide">
+          <img src="/logo.png" alt="" width="64" height="64" />
+          <h2>Stop digging through Downloads.</h2>
+          <p>For Windows 10+ and Apple Silicon Macs.</p>
+          <div class="actions center">
+            <a class="btn large primary js-download" href="https://github.com/purestellenium/memeity/releases/latest">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M5 21h14" /></svg>
+              <span class="js-download-label">Download memeity</span>
+            </a>
+          </div>
+          <p class="roadmap"><span>Planned</span> Linux and a web client.</p>
+        </div>
       </section>
     </main>
 
     <footer>
-      <div class="wrap">
+      <div class="wrap wide">
         <span>memeity</span>
-        <span><a href="/privacy/">Privacy policy</a></span>
+        <span class="footer-links">
+          <a href="/privacy/">Privacy policy</a>
+          <a href="https://github.com/purestellenium/memeity">GitHub</a>
+          <a href="https://github.com/purestellenium/memeity/releases">Releases</a>
+        </span>
       </div>
     </footer>
 
     <script>
-      // Link the download button straight to the right installer from the latest
-      // GitHub release. If anything fails, it keeps pointing at the release page.
+      // Link the download buttons straight to the right installer from the latest
+      // GitHub release. If anything fails, they keep pointing at the release page.
       (async () => {
-        const button = document.getElementById("download");
+        const buttons = document.querySelectorAll(".js-download");
         const meta = document.getElementById("download-meta");
         const ua = navigator.userAgent;
         const os = /Windows/i.test(ua) ? "windows" : /Mac/i.test(ua) && !/iPhone|iPad/i.test(ua) ? "mac" : null;
+
+        // macOS names the middle key Option.
+        if (os === "mac") document.getElementById("key-2").textContent = "Option";
+
         try {
           const res = await fetch("https://api.github.com/repos/purestellenium/memeity/releases/latest");
           if (!res.ok) return;
@@ -104,14 +326,119 @@
           const version = release.tag_name;
           const installer = os === "windows" ? find("_x64-setup.exe") : os === "mac" ? find("_aarch64.dmg") : null;
           if (installer) {
-            button.href = installer.browser_download_url;
-            button.textContent = os === "windows" ? "Download for Windows" : "Download for Mac";
+            const label = os === "windows" ? "Download for Windows" : "Download for Mac";
+            buttons.forEach((b) => {
+              b.href = installer.browser_download_url;
+              const l = b.querySelector(".js-download-label");
+              if (l) l.textContent = label;
+            });
           }
           const note = os === "mac" ? "Apple Silicon (M1 or newer)" : "Windows 10+ and Apple Silicon Macs";
-          meta.innerHTML = `${version} · Free · ${note} · <a href="${release.html_url}">All downloads</a>`;
+          meta.innerHTML = `${version} · ${note} · <a href="${release.html_url}">All downloads</a>`;
+          document.getElementById("update-version").textContent = `Up to date · ${version}`;
         } catch {
-          /* offline or rate-limited: the release-page link still works */
+          /* offline or rate-limited: the release-page links still work */
         }
+      })();
+
+      // The demo pane: lays tiles out like the app (each goes into the shortest of three
+      // columns), filters them by their text, and types a few searches by itself until the
+      // visitor clicks in and types their own.
+      (() => {
+        const grid = document.getElementById("demo-grid");
+        const input = document.getElementById("demo-q");
+        const empty = document.getElementById("demo-empty");
+        const toast = document.getElementById("demo-toast");
+        const paste = document.getElementById("demo-paste");
+        const tiles = [...grid.querySelectorAll(".tile")].map((el) => ({
+          el,
+          text: el.dataset.text,
+          ratio: Math.min(1.6, Math.max(0.5, el.dataset.h / el.dataset.w)),
+        }));
+
+        function layout() {
+          const q = input.value.trim().toLowerCase();
+          const width = grid.clientWidth;
+          const cols = width < 520 ? 2 : 3;
+          const pad = width < 520 ? 12 : 22;
+          const gap = width < 520 ? 10 : 14;
+          const colW = (width - pad * 2 - gap * (cols - 1)) / cols;
+          const heights = new Array(cols).fill(pad);
+          let first = true;
+          let shown = 0;
+          for (const t of tiles) {
+            const match = !q || t.text.includes(q);
+            t.el.classList.toggle("hidden", !match);
+            t.el.classList.remove("selected");
+            if (!match) continue;
+            const c = heights.indexOf(Math.min(...heights));
+            const h = colW * t.ratio;
+            t.el.style.width = `${colW}px`;
+            t.el.style.height = `${h}px`;
+            t.el.style.transform = `translate(${pad + c * (colW + gap)}px, ${heights[c]}px)`;
+            heights[c] += h + gap;
+            if (first && q) t.el.classList.add("selected");
+            first = false;
+            shown++;
+          }
+          empty.hidden = shown > 0;
+        }
+
+        function pasted() {
+          paste.classList.add("pressed");
+          toast.classList.add("show");
+          setTimeout(() => {
+            paste.classList.remove("pressed");
+            toast.classList.remove("show");
+          }, 1100);
+        }
+
+        new ResizeObserver(layout).observe(grid);
+        layout();
+        requestAnimationFrame(() => grid.classList.add("ready"));
+
+        let userTookOver = false;
+        input.addEventListener("focus", () => (userTookOver = true));
+        input.addEventListener("input", layout);
+        input.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" && grid.querySelector(".tile.selected")) pasted();
+          if (e.key === "Escape") {
+            input.value = "";
+            layout();
+          }
+        });
+
+        if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+        let onScreen = false;
+        new IntersectionObserver(([e]) => (onScreen = e.isIntersecting)).observe(grid);
+        const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+        const ready = async () => {
+          while (!onScreen || document.hidden) await sleep(250);
+          return !userTookOver;
+        };
+
+        (async () => {
+          const searches = ["execution", "listen", "terrible day", "theven"];
+          await sleep(1200);
+          for (let i = 0; ; i = (i + 1) % searches.length) {
+            const q = searches[i];
+            for (let n = 1; n <= q.length; n++) {
+              if (!(await ready())) return;
+              input.value = q.slice(0, n);
+              layout();
+              await sleep(70 + Math.random() * 70);
+            }
+            await sleep(650);
+            if (!(await ready())) return;
+            pasted();
+            await sleep(1900);
+            if (!(await ready())) return;
+            input.value = "";
+            layout();
+            await sleep(1400);
+          }
+        })();
       })();
     </script>
   </body>
