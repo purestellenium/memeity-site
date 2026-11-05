@@ -366,18 +366,26 @@
       })();
 
       // Logo voicelines: always opens with the first, then each click moves to the next.
+      // The first time someone clicks past the last line, a video opens in a new tab;
+      // after that the lines just loop.
       (() => {
         const lines = [
           "hey, it's me, it's memeity!",
+          "ask me anything!",
           "i'll store about a million memes!",
           "i'll find any meme!",
-          "they call me lord memeity",
         ];
         const logo = document.getElementById("logo-voice");
         const speech = document.getElementById("speech");
         let i = 0;
+        let opened = false;
         logo.addEventListener("click", () => {
-          i = (i + 1) % lines.length;
+          i++;
+          if (i === lines.length) {
+            if (!opened) window.open("https://www.youtube.com/watch?v=tVlKLpxyCBY", "_blank", "noopener");
+            opened = true;
+            i = 0;
+          }
           speech.textContent = lines[i];
           // Restart the pop animation for the new line.
           speech.classList.remove("pop");
