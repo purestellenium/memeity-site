@@ -129,7 +129,7 @@
                 <span class="pane-acts">
                   <span class="act strong" id="demo-paste">Paste to App <kbd>↵</kbd></span>
                   <span class="act hide-sm">Copy <kbd>Shift</kbd><kbd>↵</kbd></span>
-                  <span class="act hide-sm">Actions <kbd>Ctrl</kbd><kbd>K</kbd></span>
+                  <span class="act hide-sm">Actions <kbd class="js-mod">Ctrl</kbd><kbd>K</kbd></span>
                 </span>
               </div>
             </div>
@@ -223,7 +223,7 @@
               <div class="card-visual drop" aria-hidden="true">
                 <div class="drop-zone">
                   <img src="/assets/demo/theven.jpg" alt="" />
-                  <span>Drop or <kbd>Ctrl</kbd><kbd>V</kbd></span>
+                  <span>Drop or <kbd class="js-mod">Ctrl</kbd><kbd>V</kbd></span>
                 </div>
               </div>
               <h3>Add memes in a second</h3>
@@ -326,8 +326,12 @@
         const ua = navigator.userAgent;
         const os = /Windows/i.test(ua) ? "windows" : /Mac/i.test(ua) && !/iPhone|iPad/i.test(ua) ? "mac" : null;
 
-        // macOS names the middle key Option.
-        if (os === "mac") document.getElementById("key-2").textContent = "Option";
+        // On a Mac, show Mac keys, matching the app: the global shortcut is still
+        // Ctrl+Option+M (macOS names Alt "Option"), but in-app shortcuts use Cmd.
+        if (os === "mac") {
+          document.getElementById("key-2").textContent = "Option";
+          for (const k of document.querySelectorAll(".js-mod")) k.textContent = "⌘";
+        }
 
         try {
           const res = await fetch("https://api.github.com/repos/purestellenium/memeity/releases/latest");
