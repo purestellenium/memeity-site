@@ -50,10 +50,11 @@
       <section class="hero">
         <div class="wrap wide hero-grid">
           <div class="hero-copy">
-          <div class="hero-logo">
-            <img src="/logo.png" alt="memeity logo" width="100" height="100" />
-            <p class="speech">hey, it's me, it's memeity!</p>
-          </div>
+          <!-- Click the logo for another voiceline (see the script at the bottom). -->
+          <button class="hero-logo" id="logo-voice" type="button" aria-label="memeity logo: click for another line">
+            <img src="/logo.png" alt="" width="100" height="100" />
+            <span class="speech" id="speech" aria-live="polite">hey, it's me, it's memeity!</span>
+          </button>
           <h1>a meme folder for the modern era.</h1>
           <p class="lede">
             Every meme you own, in one folder synced through your own Google Drive. Hit a shortcut, type what you remember,
@@ -339,6 +340,27 @@
         } catch {
           /* offline or rate-limited: the release-page links still work */
         }
+      })();
+
+      // Logo voicelines: always opens with the first, then each click moves to the next.
+      (() => {
+        const lines = [
+          "hey, it's me, it's memeity!",
+          "i'll store about a million memes!",
+          "i'll find any meme!",
+          "they call me lord memeity",
+        ];
+        const logo = document.getElementById("logo-voice");
+        const speech = document.getElementById("speech");
+        let i = 0;
+        logo.addEventListener("click", () => {
+          i = (i + 1) % lines.length;
+          speech.textContent = lines[i];
+          // Restart the pop animation for the new line.
+          speech.classList.remove("pop");
+          void speech.offsetWidth;
+          speech.classList.add("pop");
+        });
       })();
 
       // The demo pane: lays tiles out like the app (each goes into the shortest of three

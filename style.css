@@ -278,12 +278,39 @@ h2 {
   animation: float 6s ease-in-out infinite;
 }
 
+/* The logo is a button (click for another voiceline), so strip button styling. */
+button.hero-logo {
+  display: block;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+button.hero-logo:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+
 .hero-logo img {
   display: block;
   width: 100%;
   height: 100%;
   border-radius: 50%;
   box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.6);
+  transition: scale 0.2s ease;
+}
+
+.hero-logo:hover img {
+  scale: 1.06;
+}
+
+.hero-logo:active img {
+  scale: 0.96;
 }
 
 /* Speech bubble off the logo's upper right; its tight corner points back at it. */
@@ -314,6 +341,18 @@ h2 {
   }
 }
 
+/* Each new line pops in again (same motion, no delay). */
+.speech.pop {
+  animation: speech-pop 0.4s cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+
+@keyframes speech-pop {
+  from {
+    opacity: 0.4;
+    transform: scale(0.7) translateY(4px);
+  }
+}
+
 
 @keyframes float {
   0%,
@@ -331,13 +370,14 @@ h2 {
     height: 88px;
     margin: 44px auto 22px;
   }
+}
 
-  /* No room beside the logo on phones: sit above it instead. */
+/* No room beside the logo on small screens: the bubble sits above it instead. */
+@media (max-width: 720px) {
   .speech {
     bottom: calc(100% + 10px);
     left: 50%;
     translate: -50% 0;
-    border-radius: 16px 16px 16px 4px;
     font-size: 14px;
     transform-origin: bottom center;
   }
@@ -392,31 +432,38 @@ h1 {
 }
 
 /* Wide screens: copy on the left, the demo pane beside it, both above the fold.
+   The hero breaks out of the page's 1120px column to use more of the screen.
    Narrower screens keep the centred, stacked layout above. */
 @media (min-width: 961px) {
   .hero {
-    padding: 72px 0 80px;
+    padding: 128px 0 104px;
     text-align: left;
   }
 
-  .hero-grid {
+  .hero .wrap.hero-grid {
     display: grid;
-    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
     align-items: center;
-    gap: 56px;
+    gap: clamp(56px, 6vw, 112px);
+    max-width: 1480px;
+    padding: 0 clamp(24px, 4vw, 64px);
   }
 
   .hero-logo {
-    margin: 0 0 24px;
+    width: 124px;
+    height: 124px;
+    margin: 0 0 32px;
   }
 
   .home h1 {
-    font-size: clamp(44px, 4.6vw, 58px);
+    font-size: clamp(48px, 5vw, 80px);
+    margin-bottom: 24px;
   }
 
   .lede {
     max-width: 30em;
-    margin: 0 0 28px;
+    margin: 0 0 36px;
+    font-size: clamp(18px, 1.4vw, 21px);
   }
 
   .hero .actions {
@@ -426,6 +473,11 @@ h1 {
   .demo {
     max-width: none;
     margin: 0;
+  }
+
+  /* .hero raises specificity over the base .pane-grid rule further down. */
+  .hero .pane-grid {
+    height: clamp(400px, 34vw, 500px);
   }
 }
 
