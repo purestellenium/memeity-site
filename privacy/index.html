@@ -26,7 +26,7 @@
 
     <main class="wrap prose">
       <h1>Privacy policy</h1>
-      <p class="meta">Effective November 4, 2026</p>
+      <p class="meta">Effective November 5, 2026</p>
 
       <p>
         memeity is a desktop app that keeps your meme collection in sync across your devices using your own Google Drive.
@@ -67,14 +67,15 @@
       <ul>
         <li>A local copy of your memes, in a <code>memeity</code> folder in your user folder.</li>
         <li>A search index of filenames and image text, and sync bookkeeping, in memeity's app-data folder.</li>
-        <li>Your Google sign-in token, in your operating system's secure credential store (Windows Credential Manager).</li>
+        <li>Your Google sign-in token, in your operating system's secure credential store (Windows Credential Manager on Windows, Keychain on Mac).</li>
         <li>Your signed-in email address, in memeity's settings file.</li>
       </ul>
       <p><strong>In your Google Drive:</strong> the memeity folder, your memes, and memeity's metadata files.</p>
       <p>
         Text in images is recognized on your device using PaddleOCR, an open-source text-recognition model that runs
         locally. Images aren't sent to the developer or any third party for this. The first time it's needed, memeity
-        downloads the model files (about 30 MB) from GitHub; that download contains none of your data.
+        downloads the model files (about 30 MB) from GitHub; that download contains none of your data. Text recognition
+        isn't available on Intel Macs yet, so memeity doesn't download the model there.
       </p>
 
       <h2>Sharing</h2>

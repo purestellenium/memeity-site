@@ -70,7 +70,7 @@
             <a class="btn large" href="https://github.com/purestellenium/memeity">View source</a>
           </div>
           <p class="download-meta" id="download-meta">
-            Windows 10+ and Apple Silicon Macs ·
+            Windows 10+ and Macs (Apple Silicon and Intel) ·
             <a href="https://github.com/purestellenium/memeity/releases/latest">All downloads</a>
           </p>
           </div>
@@ -188,7 +188,7 @@
               <h3>Finds the words in your memes</h3>
               <p>
                 Search by filename or by the text on the image itself. memeity reads it on your device, so nothing gets sent
-                anywhere to be read.
+                anywhere to be read. Not on Intel Macs yet, but text read on your other computers syncs over.
               </p>
             </article>
 
@@ -284,7 +284,7 @@
         <div class="wrap wide">
           <img src="/logo.png" alt="" width="64" height="64" />
           <h2>Stop digging through Downloads.</h2>
-          <p>For Windows 10+ and Apple Silicon Macs.</p>
+          <p>For Windows 10+ and Macs, Apple Silicon or Intel.</p>
           <div class="actions center">
             <a class="btn large primary js-download" href="https://github.com/purestellenium/memeity/releases/latest">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M5 21h14" /></svg>
@@ -310,6 +310,8 @@
     <script>
       // Link the download buttons straight to the right installer from the latest
       // GitHub release. If anything fails, they keep pointing at the release page.
+      // These match the release workflow's file names: _x64-setup.exe (Windows),
+      // _aarch64.dmg (Apple Silicon) and _x64.dmg (Intel Mac).
       (async () => {
         const buttons = document.querySelectorAll(".js-download");
         const meta = document.getElementById("download-meta");
@@ -325,17 +327,38 @@
           const release = await res.json();
           const find = (suffix) => release.assets.find((a) => a.name.endsWith(suffix));
           const version = release.tag_name;
-          const installer = os === "windows" ? find("_x64-setup.exe") : os === "mac" ? find("_aarch64.dmg") : null;
-          if (installer) {
-            const label = os === "windows" ? "Download for Windows" : "Download for Mac";
+          const all = `<a href="${release.html_url}">All downloads</a>`;
+          const point = (asset, label) =>
             buttons.forEach((b) => {
-              b.href = installer.browser_download_url;
+              b.href = asset.browser_download_url;
               const l = b.querySelector(".js-download-label");
               if (l) l.textContent = label;
             });
+
+          if (os === "windows" && find("_x64-setup.exe")) {
+            point(find("_x64-setup.exe"), "Download for Windows");
+            meta.innerHTML = `${version} · Windows 10+ · ${all}`;
+          } else if (os === "mac") {
+            // Browsers don't say which kind of Mac this is, except Chromium-based ones
+            // (Chrome, Edge, Arc) through user-agent client hints. Otherwise assume Apple
+            // Silicon, which is most Macs in use, and always offer the other one.
+            let intel = false;
+            try {
+              const hints = await navigator.userAgentData?.getHighEntropyValues(["architecture"]);
+              intel = hints?.architecture === "x86";
+            } catch {}
+            const arm = find("_aarch64.dmg");
+            const x64 = find("_x64.dmg");
+            const [main, other] = intel ? [x64, arm] : [arm, x64];
+            if (main) point(main, intel ? "Download for Intel Mac" : "Download for Mac");
+            const here = intel ? "For Intel Macs" : "For Apple Silicon Macs";
+            const swap = other
+              ? ` · <a href="${other.browser_download_url}">${intel ? "Apple Silicon" : "Intel"} Mac?</a>`
+              : "";
+            meta.innerHTML = `${version} · ${here}${swap} · ${all}`;
+          } else {
+            meta.innerHTML = `${version} · Windows 10+ and Macs (Apple Silicon and Intel) · ${all}`;
           }
-          const note = os === "mac" ? "Apple Silicon (M1 or newer)" : "Windows 10+ and Apple Silicon Macs";
-          meta.innerHTML = `${version} · ${note} · <a href="${release.html_url}">All downloads</a>`;
           document.getElementById("update-version").textContent = `Up to date · ${version}`;
         } catch {
           /* offline or rate-limited: the release-page links still work */
