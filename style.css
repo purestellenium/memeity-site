@@ -65,9 +65,17 @@ nav .wrap {
 }
 
 .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-weight: 600;
   letter-spacing: -0.02em;
   text-decoration: none;
+}
+
+.hero-logo {
+  display: block;
+  margin-bottom: 24px;
 }
 
 nav .links {
