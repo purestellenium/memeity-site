@@ -83,7 +83,7 @@
                 <input
                   id="demo-q"
                   type="text"
-                  placeholder="Search 6 memes by name or text…"
+                  placeholder="Search 9 memes by name or text…"
                   aria-label="Search the example memes"
                   autocomplete="off"
                   spellcheck="false"
@@ -111,6 +111,15 @@
                 </figure>
                 <figure class="tile" data-w="480" data-h="343" data-text="what-a-terrible-day-to-have-slick what terrible day to have slick">
                   <img src="/assets/demo/terrible-day.jpg" alt="Meme: retro text reading What a TERRIBLE DAY TO HAVE SLICK" />
+                </figure>
+                <figure class="tile" data-w="480" data-h="475" data-text="0pp9ggttp6xf1 why won't god blow up the sun? ...do my prayers mean nothing to him?">
+                  <img src="/assets/demo/blow-up-the-sun.jpg" alt="Meme: a sad cartoon bunny drawing, captioned Why Won't God Blow Up The Sun? ...do my prayers mean nothing to him?" />
+                </figure>
+                <figure class="tile" data-w="480" data-h="480" data-text="mbappe-kylian-mbappe i will be there no matter what. kylian mbappe on playing for psg in 2020-21 ligue quote via bein sports">
+                  <img src="/assets/demo/mbappe.jpg" alt="Meme: Kylian Mbappé quote, I WILL BE THERE NO MATTER WHAT." />
+                </figure>
+                <figure class="tile" data-w="480" data-h="271" data-text="shrouded 1.3s &quot;shrouded!&quot; 1.3 seconds">
+                  <img src="/assets/demo/shrouded.jpg" alt="Meme: a man thinking with a red arrow, captioned “SHROUDED!” 1.3 SECONDS" />
                 </figure>
                 <p class="pane-empty" id="demo-empty" hidden>No memes match that. Try “execution” or “listen”.</p>
                 <div class="pane-toast" id="demo-toast" aria-live="polite">Pasted ✓</div>
@@ -471,7 +480,7 @@
         };
 
         (async () => {
-          const searches = ["execution", "listen", "terrible day", "theven"];
+          const searches = ["execution", "listen", "blow up the sun", "terrible day", "mbappe", "shrouded", "theven"];
           await sleep(1200);
           for (let i = 0; ; i = (i + 1) % searches.length) {
             const q = searches[i];
