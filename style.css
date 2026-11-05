@@ -1,0 +1,260 @@
+/* memeity site: same zinc palette and Geist type as the app. */
+:root {
+  --bg: #09090b;
+  --fg: #fafafa;
+  --muted: #18181b;
+  --muted-fg: #a1a1aa;
+  --border: #27272a;
+  --primary: #fafafa;
+  --primary-fg: #18181b;
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #ffffff;
+    --fg: #09090b;
+    --muted: #f4f4f5;
+    --muted-fg: #71717a;
+    --border: #e4e4e7;
+    --primary: #18181b;
+    --primary-fg: #fafafa;
+    color-scheme: light;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 16px/1.6 "Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--muted-fg);
+}
+
+a:hover {
+  text-decoration-color: currentColor;
+}
+
+.wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ---------- nav ---------- */
+
+nav {
+  border-bottom: 1px solid var(--border);
+}
+
+nav .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+}
+
+.brand {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
+nav .links {
+  display: flex;
+  gap: 20px;
+  font-size: 14px;
+  color: var(--muted-fg);
+}
+
+nav .links a {
+  text-decoration: none;
+}
+
+nav .links a:hover {
+  color: var(--fg);
+}
+
+/* ---------- home ---------- */
+
+.hero {
+  padding: 88px 0 56px;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: 18px;
+  padding: 2px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted-fg);
+  font: 500 12px/1.8 "Geist Mono", ui-monospace, monospace;
+}
+
+h1 {
+  margin: 0 0 16px;
+  font-size: clamp(36px, 7vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  font-weight: 600;
+}
+
+.lede {
+  margin: 0 0 28px;
+  max-width: 34em;
+  color: var(--muted-fg);
+  font-size: 18px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.btn.primary {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--primary-fg);
+}
+
+.btn[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  padding-bottom: 56px;
+}
+
+.feature {
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.feature h3 {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.feature p {
+  margin: 0;
+  color: var(--muted-fg);
+  font-size: 14px;
+}
+
+kbd {
+  padding: 1px 6px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--muted);
+  font: 500 0.85em "Geist Mono", ui-monospace, monospace;
+}
+
+.panel {
+  margin-bottom: 72px;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--muted);
+}
+
+.panel h2 {
+  margin-top: 0;
+}
+
+/* ---------- prose (privacy policy) ---------- */
+
+.prose {
+  padding: 56px 0 72px;
+}
+
+h2 {
+  margin: 40px 0 10px;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.prose h1 {
+  font-size: clamp(30px, 6vw, 40px);
+}
+
+.prose p,
+.prose li {
+  color: var(--fg);
+}
+
+.prose .meta {
+  color: var(--muted-fg);
+  font-size: 14px;
+}
+
+.prose ul {
+  padding-left: 20px;
+}
+
+.prose li {
+  margin-bottom: 6px;
+}
+
+.callout {
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--fg);
+  border-radius: 8px;
+  background: var(--muted);
+}
+
+code {
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: var(--muted);
+  font: 0.88em "Geist Mono", ui-monospace, monospace;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- footer ---------- */
+
+footer {
+  border-top: 1px solid var(--border);
+  color: var(--muted-fg);
+  font-size: 14px;
+}
+
+footer .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  justify-content: space-between;
+  padding-top: 24px;
+  padding-bottom: 32px;
+}

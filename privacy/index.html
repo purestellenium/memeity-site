@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Privacy policy · memeity</title>
+    <meta name="description" content="How the memeity desktop app handles your data and your Google account." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <nav>
+      <div class="wrap">
+        <a class="brand" href="/">memeity</a>
+        <div class="links">
+          <a href="/privacy/">Privacy</a>
+          <a href="https://github.com/purestellenium/memeity">GitHub</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="wrap prose">
+      <h1>Privacy policy</h1>
+      <p class="meta">Effective November 4, 2026</p>
+
+      <p>
+        memeity is a desktop app that keeps your meme collection in sync across your devices using your own Google Drive.
+        This policy explains what data memeity accesses, how it's used, and where it's stored.
+      </p>
+
+      <p class="callout">
+        <strong>In short:</strong> memeity has no servers. Your memes and everything memeity knows about them stay on your
+        devices and in your own Google Drive. The developer never receives your data, and memeity has no analytics, ads or
+        tracking.
+      </p>
+
+      <h2>Google user data memeity accesses</h2>
+      <p>When you sign in with Google, memeity requests one permission:</p>
+      <ul>
+        <li>
+          <strong>Google Drive, files memeity uses</strong> (<code>https://www.googleapis.com/auth/drive.file</code>). This
+          lets memeity see, create, edit and delete <em>only</em> the files and folders it created itself: the
+          <strong>memeity</strong> folder in your Drive, the memes memeity uploads into it, and memeity's metadata files.
+          memeity cannot see or change any other file in your Google Drive.
+        </li>
+      </ul>
+      <p>
+        Through the Google Drive API, memeity also reads your Google account's <strong>email address</strong>, solely to show
+        you which account is signed in.
+      </p>
+
+      <h2>How memeity uses that data</h2>
+      <ul>
+        <li>To keep the memes in your memeity folder in sync between your devices: uploading memes you add, downloading memes added on your other devices, and removing memes you delete in memeity.</li>
+        <li>To store small metadata files (in a <code>.meta</code> folder inside your memeity folder) containing the text memeity read from each image, so your other devices can search it without reading the image again.</li>
+        <li>To display your signed-in email address in the app.</li>
+      </ul>
+      <p>memeity does not use Google user data for advertising, profiling, or training AI or machine-learning models.</p>
+
+      <h2>Where your data is stored</h2>
+      <p><strong>On your device:</strong></p>
+      <ul>
+        <li>A local copy of your memes, in a <code>memeity</code> folder in your user folder.</li>
+        <li>A search index of filenames and image text, and sync bookkeeping, in memeity's app-data folder.</li>
+        <li>Your Google sign-in token, in your operating system's secure credential store (Windows Credential Manager).</li>
+        <li>Your signed-in email address, in memeity's settings file.</li>
+      </ul>
+      <p><strong>In your Google Drive:</strong> the memeity folder, your memes, and memeity's metadata files.</p>
+      <p>
+        Text in images is recognized on your device using your operating system's built-in text recognition. Images aren't
+        sent to the developer or any third party for this.
+      </p>
+
+      <h2>Sharing</h2>
+      <p>
+        memeity does not sell, share, or transfer your data to anyone. Data only moves between your device and Google's
+        APIs, over encrypted connections, to provide the syncing described above.
+      </p>
+
+      <h2>Limited Use disclosure</h2>
+      <p>
+        memeity's use and transfer of information received from Google APIs to any other app will adhere to the
+        <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>,
+        including the Limited Use requirements.
+      </p>
+
+      <h2>Your choices and deleting your data</h2>
+      <ul>
+        <li><strong>Sign out:</strong> choose “Sign out of Google” from memeity's tray menu. This removes the sign-in token from your device.</li>
+        <li><strong>Revoke access:</strong> remove memeity at <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a> at any time.</li>
+        <li><strong>Delete local data:</strong> uninstall memeity, then delete the <code>memeity</code> folder in your user folder and memeity's app-data folder (on Windows, <code>%APPDATA%\com.memeity.app</code>).</li>
+        <li><strong>Delete Drive data:</strong> delete the memeity folder from your Google Drive. memeity never deletes it for you.</li>
+      </ul>
+
+      <h2>Children</h2>
+      <p>memeity is not directed to children under 13.</p>
+
+      <h2>Changes to this policy</h2>
+      <p>
+        If this policy changes, the updated version will be posted on this page with a new effective date. Significant
+        changes will also be noted in memeity's release notes.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        Questions about this policy or your data? Open an issue at
+        <a href="https://github.com/purestellenium/memeity-site/issues">github.com/purestellenium/memeity-site/issues</a>.
+      </p>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <span>memeity</span>
+        <span><a href="/">Home</a></span>
+      </div>
+    </footer>
+  </body>
+</html>
