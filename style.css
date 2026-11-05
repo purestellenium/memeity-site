@@ -436,7 +436,7 @@ h1 {
    Narrower screens keep the centred, stacked layout above. */
 @media (min-width: 961px) {
   .hero {
-    padding: 108px 0 104px;
+    padding: 100px 0 104px;
     text-align: left;
   }
 
