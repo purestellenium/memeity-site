@@ -30,16 +30,22 @@
     <main class="wrap">
       <section class="hero">
         <img class="hero-logo" src="/logo.png" alt="memeity logo" width="96" height="96" />
-        <span class="eyebrow">Desktop app · Windows</span>
+        <span class="eyebrow">Desktop app · Windows &amp; Mac</span>
         <h1>Your meme folder, everywhere.</h1>
         <p class="lede">
           memeity keeps one meme folder in sync across all your computers, and gives you a lightning-fast search pane to
           find the right meme and paste it anywhere.
         </p>
         <div class="actions">
-          <a class="btn primary" aria-disabled="true">Download coming soon</a>
+          <!-- Points at the latest release page; the script below swaps in the direct
+               installer link for the visitor's OS. -->
+          <a class="btn primary" id="download" href="https://github.com/purestellenium/memeity/releases/latest">Download memeity</a>
           <a class="btn" href="https://github.com/purestellenium/memeity">View source</a>
         </div>
+        <p class="download-meta" id="download-meta">
+          Free · Windows 10+ and Apple Silicon Macs ·
+          <a href="https://github.com/purestellenium/memeity/releases/latest">All downloads</a>
+        </p>
       </section>
 
       <section class="features" aria-label="Features">
@@ -81,5 +87,32 @@
         <span><a href="/privacy/">Privacy policy</a></span>
       </div>
     </footer>
+
+    <script>
+      // Link the download button straight to the right installer from the latest
+      // GitHub release. If anything fails, it keeps pointing at the release page.
+      (async () => {
+        const button = document.getElementById("download");
+        const meta = document.getElementById("download-meta");
+        const ua = navigator.userAgent;
+        const os = /Windows/i.test(ua) ? "windows" : /Mac/i.test(ua) && !/iPhone|iPad/i.test(ua) ? "mac" : null;
+        try {
+          const res = await fetch("https://api.github.com/repos/purestellenium/memeity/releases/latest");
+          if (!res.ok) return;
+          const release = await res.json();
+          const find = (suffix) => release.assets.find((a) => a.name.endsWith(suffix));
+          const version = release.tag_name;
+          const installer = os === "windows" ? find("_x64-setup.exe") : os === "mac" ? find("_aarch64.dmg") : null;
+          if (installer) {
+            button.href = installer.browser_download_url;
+            button.textContent = os === "windows" ? "Download for Windows" : "Download for Mac";
+          }
+          const note = os === "mac" ? "Apple Silicon (M1 or newer)" : "Windows 10+ and Apple Silicon Macs";
+          meta.innerHTML = `${version} · Free · ${note} · <a href="${release.html_url}">All downloads</a>`;
+        } catch {
+          /* offline or rate-limited: the release-page link still works */
+        }
+      })();
+    </script>
   </body>
 </html>

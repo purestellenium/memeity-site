@@ -148,9 +148,10 @@ h1 {
   color: var(--primary-fg);
 }
 
-.btn[aria-disabled="true"] {
-  opacity: 0.55;
-  cursor: default;
+.download-meta {
+  margin: 12px 0 0;
+  color: var(--muted-fg);
+  font-size: 13px;
 }
 
 .features {
