@@ -135,7 +135,6 @@ nav .links .btn {
 }
 
 @media (max-width: 560px) {
-  nav .links a[href="#features"],
   nav .links a[href*="github.com"] {
     display: none;
   }
