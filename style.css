@@ -1120,41 +1120,6 @@ h1 {
   }
 }
 
-/* GIF */
-.gif-tile {
-  position: relative;
-  width: 160px;
-  overflow: hidden;
-  border-radius: 9px;
-  animation: bob 2.6s ease-in-out infinite;
-}
-
-.gif-tile img {
-  display: block;
-  width: 100%;
-}
-
-.gif-badge {
-  position: absolute;
-  right: 6px;
-  bottom: 6px;
-  padding: 1px 6px;
-  border-radius: 5px;
-  background: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  font: 600 10.5px/1.6 "Geist Mono", monospace;
-}
-
-@keyframes bob {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05) rotate(1deg);
-  }
-}
-
 /* updates */
 .update-pill {
   display: inline-flex;
@@ -1307,6 +1272,289 @@ h1 {
   font: 500 11px/1.6 "Geist Mono", monospace;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+
+/* ---------- editor card ---------- */
+
+/* Two columns wide, two rows tall: the mock editor on top, the words below. */
+.editor-card .card-visual {
+  padding: 18px;
+}
+
+.editor-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* A miniature of the editor: tool rail, canvas, style panel. */
+.ed-window {
+  display: flex;
+  /* It's a picture of the editor: nothing in it can be selected or dragged. */
+  -webkit-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  width: min(100%, 560px);
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  background: var(--bg);
+  box-shadow: var(--shadow);
+}
+
+.ed-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 5px;
+  border-right: 1px solid var(--border);
+}
+
+.ed-rail i {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  color: var(--muted-fg);
+}
+
+.ed-rail i.on {
+  background: var(--primary);
+  color: var(--primary-fg);
+}
+
+.ed-rail svg {
+  width: 13px;
+  height: 13px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ed-rail b {
+  width: 14px;
+  height: 1px;
+  margin: 3px 0;
+  background: var(--border);
+}
+
+.ed-canvas {
+  position: relative;
+  flex: 1;
+  align-self: center;
+  max-width: 340px;
+  margin: 10px auto;
+  container-type: inline-size;
+  line-height: 0;
+}
+
+.ed-canvas img {
+  display: block;
+  width: 100%;
+  border-radius: 4px;
+}
+
+.ed-ink {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ed-ink ellipse {
+  fill: none;
+  stroke: #ff2d2d;
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  animation: ed-draw 7s ease-in-out infinite;
+}
+
+.ed-caption {
+  position: absolute;
+  bottom: 4%;
+  left: 4%;
+  right: 4%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5% 0;
+  border: 1.5px solid #3b82f6;
+  color: #fff;
+  font: 700 5.4cqw/1.1 Arial, Helvetica, sans-serif;
+  letter-spacing: 0.01em;
+  -webkit-text-stroke: 0.55cqw #000;
+  paint-order: stroke fill;
+  animation: ed-caption 7s ease-out infinite;
+}
+
+/* Selection handles on two corners. */
+.ed-caption::before,
+.ed-caption::after {
+  content: "";
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border: 1.5px solid #3b82f6;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.ed-caption::before {
+  top: -4.5px;
+  left: -4.5px;
+}
+
+.ed-caption::after {
+  right: -4.5px;
+  bottom: -4.5px;
+}
+
+.ed-arrow {
+  position: absolute;
+  top: 47%;
+  left: 71%;
+  width: 22%;
+  transform: rotate(-155deg);
+  transform-origin: 50% 50%;
+  animation: ed-arrow 7s ease-out infinite;
+}
+
+.ed-arrow svg {
+  display: block;
+  width: 100%;
+  fill: #ff2d2d;
+  stroke: #000;
+  stroke-width: 2;
+}
+
+.ed-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 128px;
+  padding: 10px;
+  border-left: 1px solid var(--border);
+  font-size: 10px;
+  line-height: 1.3;
+}
+
+.ed-label {
+  color: var(--muted-fg);
+  font-weight: 500;
+}
+
+.ed-seg {
+  display: flex;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+}
+
+.ed-seg em {
+  flex: 1;
+  padding: 3px 0;
+  color: var(--muted-fg);
+  font-style: normal;
+  text-align: center;
+}
+
+.ed-seg em + em {
+  border-left: 1px solid var(--border);
+}
+
+.ed-seg em.on {
+  background: var(--primary);
+  color: var(--primary-fg);
+}
+
+.ed-swatches {
+  display: flex;
+  gap: 4px;
+}
+
+.ed-swatches i {
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+}
+
+.ed-swatches i.on {
+  outline: 1.5px solid var(--ring);
+  outline-offset: 1.5px;
+}
+
+.ed-save {
+  margin-top: auto;
+  padding: 5px 0;
+  border-radius: 5px;
+  background: var(--primary);
+  color: var(--primary-fg);
+  font-weight: 600;
+  text-align: center;
+}
+
+@media (max-width: 560px) {
+  .ed-panel {
+    display: none;
+  }
+}
+
+/* The loop: caption appears, the circle is drawn, the arrow drops in, then it resets.
+   Each element's resting state is the finished meme (shown as-is with reduced motion). */
+@keyframes ed-caption {
+  0%,
+  6% {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  14%,
+  90% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes ed-draw {
+  0%,
+  24% {
+    stroke-dashoffset: 100;
+    opacity: 1;
+  }
+  44%,
+  90% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes ed-arrow {
+  0%,
+  50% {
+    opacity: 0;
+    transform: rotate(-155deg) translateX(-30%);
+  }
+  60%,
+  90% {
+    opacity: 1;
+    transform: rotate(-155deg);
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(-155deg);
+  }
 }
 
 /* ---------- motion preferences ---------- */
